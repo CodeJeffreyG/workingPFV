@@ -1,0 +1,29 @@
+.gridContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 120px);
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5%;
+  max-width: 5rem;
+  height: 5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  border-radius: 0.25rem;
+  background-color: rgb(71 85 105);
+}

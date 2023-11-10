@@ -1,0 +1,11 @@
+.algo-menu {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.speed-menu {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.algo-menu .Select-menu {
+  color: green;
+}
