@@ -100,9 +100,17 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     const currentId = e.currentTarget.id;
     let parsedId = currentId.split(",").map((x) => Number(x));
     let node = viewGrid[parsedId[0]][parsedId[1]];
+    let tempGrid = [...viewGrid];
 
     if (!node.isStart && !node.isFinish) {
       setCreateWalls(true);
+      tempGrid[parsedId[0]][parsedId[1]] = {
+        ...node,
+        isWall: true,
+        isStart: false,
+        isFinish: false,
+      };
+      setViewGrid(tempGrid);
       // console.log("create walls is now true", createWalls);
     }
 
