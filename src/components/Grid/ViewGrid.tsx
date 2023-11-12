@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dfs, Bfs } from "./Algos";
 import "./grid.css";
+import { start } from "repl";
 
 interface Node {
   isWall: boolean;
@@ -37,6 +38,46 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     backTracked: false,
   });
 
+  const getStartAndFinishNodes = (
+    viewGrid: Node[][]
+  ): {
+    startNode: Node | null;
+    endNode: Node | null;
+  } => {
+    let startNode: Node | null = null;
+    let endNode: Node | null = null;
+
+    // Iterate through the grid to find the start and end nodes
+    viewGrid.forEach((row) => {
+      row.forEach((col) => {
+        if (col.isStart) {
+          startNode = col;
+        } else if (col.isFinish) {
+          endNode = col;
+        }
+      });
+    });
+
+    return { startNode, endNode };
+  };
+
+  const isNodeStartOrFinish = (
+    node: Node,
+    startNode: Node,
+    finishNode: Node,
+    currentNode: Node
+  ): boolean => {
+    return (
+      (node.row === startNode.row && node.col === startNode.col) ||
+      (node.row === finishNode.row && node.col === finishNode.col) ||
+      (currentNode &&
+        currentNode.row !== undefined &&
+        currentNode.col !== undefined &&
+        node.row === currentNode.row &&
+        node.col === currentNode.col)
+    );
+  };
+
   //changes normal node to wall node
   const changeState = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const currentId = e.currentTarget.id;
@@ -62,7 +103,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
 
     if (!node.isStart && !node.isFinish) {
       setCreateWalls(true);
-      console.log("create walls is now true", createWalls);
+      // console.log("create walls is now true", createWalls);
     }
 
     setCurrentNode(node);
@@ -86,13 +127,15 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     let startNode = tempGrid[currentNode.row][currentNode.col]; // Node with start
 
     if (createWalls) {
-      tempGrid[parsedId[0]][parsedId[1]] = {
-        ...node,
-        isWall: true,
-        isStart: false,
-        isFinish: false,
-      };
-      setViewGrid(tempGrid);
+      if (!node.isStart && !node.isFinish) {
+        tempGrid[parsedId[0]][parsedId[1]] = {
+          ...node,
+          isWall: true,
+          isStart: false,
+          isFinish: false,
+        };
+        setViewGrid(tempGrid);
+      }
     }
 
     if (mouseClick && !createWalls) {
