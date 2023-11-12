@@ -38,45 +38,20 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     backTracked: false,
   });
 
-  const getStartAndFinishNodes = (
-    viewGrid: Node[][]
-  ): {
-    startNode: Node | null;
-    endNode: Node | null;
-  } => {
-    let startNode: Node | null = null;
-    let endNode: Node | null = null;
-
-    // Iterate through the grid to find the start and end nodes
-    viewGrid.forEach((row) => {
-      row.forEach((col) => {
-        if (col.isStart) {
-          startNode = col;
-        } else if (col.isFinish) {
-          endNode = col;
-        }
-      });
-    });
-
-    return { startNode, endNode };
+  const mouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    setMouseClick(false);
+    setCreateWalls(false);
+    console.log(createWalls, "create walls is now false");
   };
 
-  const isNodeStartOrFinish = (
-    node: Node,
-    startNode: Node,
-    finishNode: Node,
-    currentNode: Node
-  ): boolean => {
-    return (
-      (node.row === startNode.row && node.col === startNode.col) ||
-      (node.row === finishNode.row && node.col === finishNode.col) ||
-      (currentNode &&
-        currentNode.row !== undefined &&
-        currentNode.col !== undefined &&
-        node.row === currentNode.row &&
-        node.col === currentNode.col)
-    );
-  };
+  useEffect(() => {
+    window.addEventListener("mouseup", () => mouseUp);
+
+    return () => {
+      window.removeEventListener("mouseup", () => mouseUp);
+    };
+  }, []);
 
   //changes normal node to wall node
   const changeState = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -118,12 +93,6 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   };
 
   //turns start/finish node draggable off
-  const mouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    setMouseClick(false);
-    setCreateWalls(false);
-    console.log(createWalls, "create walls is now false");
-  };
 
   //if mouseClick State is set to true... then swap the currentNode with the node the mouse just entered.
   //keeps swapping until mouseClick is set to false.
