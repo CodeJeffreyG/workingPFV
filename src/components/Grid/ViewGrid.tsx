@@ -23,6 +23,8 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
 
   const [mouseClick, setMouseClick] = useState<boolean>(false);
 
+  const [createWalls, setCreateWalls] = useState<boolean>(false);
+
   const [currentNode, setCurrentNode] = useState<Node>({
     isWall: false,
     isStart: false,
@@ -41,6 +43,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     let parsedId = currentId.split(",").map((x) => Number(x));
     let tempGrid = [...viewGrid];
     let node = tempGrid[parsedId[0]][parsedId[1]];
+
     if (node.isStart || node.isFinish) return;
 
     node.isWall = !node.isWall;
@@ -50,34 +53,50 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   //checks if its startNode or finishNode if it is able to drag node
   const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
+
+    setMouseClick(true);
+
     const currentId = e.currentTarget.id;
     let parsedId = currentId.split(",").map((x) => Number(x));
     let node = viewGrid[parsedId[0]][parsedId[1]];
 
-    if (node.isStart || node.isFinish) {
-      setCurrentNode(node);
-      setMouseClick(true);
+    if (!node.isStart && !node.isFinish) {
+      setCreateWalls(true);
+      console.log("create walls is now true", createWalls);
     }
+
+    setCurrentNode(node);
   };
 
   //turns start/finish node draggable off
   const mouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     setMouseClick(false);
+    setCreateWalls(false);
+    console.log(createWalls, "create walls is now false");
   };
 
   //if mouseClick State is set to true... then swap the currentNode with the node the mouse just entered.
   //keeps swapping until mouseClick is set to false.
   const onMouseEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (mouseClick) {
-      const currentId = e.currentTarget.id;
-      let parsedId = currentId.split(",").map((x) => Number(x));
+    const currentId = e.currentTarget.id;
+    let parsedId = currentId.split(",").map((x) => Number(x));
+    let tempGrid = [...viewGrid];
+    let node = viewGrid[parsedId[0]][parsedId[1]]; // Node to switch
+    let startNode = tempGrid[currentNode.row][currentNode.col]; // Node with start
 
-      let tempGrid = [...viewGrid];
+    if (createWalls) {
+      tempGrid[parsedId[0]][parsedId[1]] = {
+        ...node,
+        isWall: true,
+        isStart: false,
+        isFinish: false,
+      };
+      setViewGrid(tempGrid);
+    }
 
-      let node = viewGrid[parsedId[0]][parsedId[1]]; //Node to switch
-      let startNode = tempGrid[currentNode.row][currentNode.col]; //node with start
-
+    if (mouseClick && !createWalls) {
+      // Only execute this logic if mouseClick is true and createWalls is false
       tempGrid[currentNode.row][currentNode.col] = {
         ...startNode,
         isWall: node.isWall,
@@ -109,9 +128,9 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
               onMouseEnter={(e) => onMouseEnter(e)}
               style={
                 col.isStart
-                  ? { backgroundColor: "green" }
+                  ? { backgroundColor: "green", cursor: "pointer" }
                   : col.isFinish
-                  ? { backgroundColor: "red" }
+                  ? { backgroundColor: "red", cursor: "pointer" }
                   : col.isWall
                   ? { backgroundColor: "black" }
                   : col.isVisited
