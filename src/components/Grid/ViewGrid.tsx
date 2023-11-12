@@ -38,18 +38,17 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     backTracked: false,
   });
 
-  const mouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    setMouseClick(false);
-    setCreateWalls(false);
-    console.log(createWalls, "create walls is now false");
-  };
-
   useEffect(() => {
-    window.addEventListener("mouseup", () => mouseUp);
+    const handleGlobalMouseUp = () => {
+      setMouseClick(false);
+      setCreateWalls(false);
+      setCurrentNode(currentNode);
+    };
+
+    window.addEventListener("mouseup", handleGlobalMouseUp);
 
     return () => {
-      window.removeEventListener("mouseup", () => mouseUp);
+      window.removeEventListener("mouseup", handleGlobalMouseUp);
     };
   }, []);
 
@@ -93,6 +92,12 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   };
 
   //turns start/finish node draggable off
+  const mouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    setMouseClick(false);
+    setCreateWalls(false);
+    console.log(createWalls, "create walls is now false");
+  };
 
   //if mouseClick State is set to true... then swap the currentNode with the node the mouse just entered.
   //keeps swapping until mouseClick is set to false.
