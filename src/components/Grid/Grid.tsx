@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Node } from "../../Helpers/types/types";
+import { Node } from "../Utils/types/types";
 import ViewGrid from "./ViewGrid";
 import "./grid.css";
 

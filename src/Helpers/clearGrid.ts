@@ -1,4 +1,4 @@
-import { Node } from "./types/types";
+import { Node } from "../components/Utils/types/types";
 
 export const clearGrid = (
   grid: Array<Array<Node>>,
@@ -24,7 +24,6 @@ export const clearGrid = (
       }
     })
   );
-  //hi
 
   setGrid(clearedGrid);
 };

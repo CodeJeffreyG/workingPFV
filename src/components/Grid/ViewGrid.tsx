@@ -1,19 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Dfs, Bfs } from "./Algos";
+import { Node } from "../Utils/types/types";
+import NavBar from "../NavBar/NavBar";
+import { Dfs, Bfs, clearGrid } from "../Utils/Algos";
 import "./grid.css";
 import { start } from "repl";
-
-interface Node {
-  isWall: boolean;
-  isStart: boolean;
-  isFinish: boolean;
-  isVisited: boolean;
-  previousNode: Node | null;
-  row: number;
-  col: number;
-  count: number;
-  backTracked: boolean;
-}
 
 interface Props {
   grid: Node[][];
@@ -142,6 +132,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
 
   return (
     <>
+      <NavBar viewGrid={viewGrid} clearGrid={clearGrid} setViewGrid={setViewGrid} />
       {viewGrid.map((row: Node[], rowIndex: number) => (
         <div className="rowContainer" key={rowIndex}>
           {row.map((col: Node, colIndex: number) => (

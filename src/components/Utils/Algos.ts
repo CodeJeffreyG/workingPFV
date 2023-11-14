@@ -1,4 +1,4 @@
-import { Node } from "../../Helpers/types/types";
+import { Node } from "./types/types";
 
 //will be used to find the shortest path
 
@@ -22,7 +22,6 @@ const bfsTraverseBack = (
     if (!currentNode) return;
 
     if (currentNode.isStart) {
-      console.log("start node found!");
       setGrid([...grid]); // Update the grid
       return;
     }
@@ -245,7 +244,31 @@ const checkSmallestWeight = (checkWeights: Node[]): Node | null => {
   )!;
 };
 
-export { Dfs, Bfs };
+const clearGrid = (
+  grid: Array<Array<Node>>,
+  setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>
+) => {
+  const tempGrid = [...grid];
+
+  for (let row of tempGrid) {
+    for (let col of row) {
+      if (col.isStart || col.isFinish) {
+        continue;
+      }
+
+      // Update the properties of the current node in tempGrid directly
+      col.isWall = false;
+      col.isVisited = false;
+      col.backTracked = false;
+      col.count = 0;
+    }
+  }
+
+  // Set the state after the loops are completed
+  setGrid(tempGrid);
+};
+
+export { Dfs, Bfs, clearGrid };
 
 // let arr = [9, 5, 9, 5, 1, 1, 1];
 

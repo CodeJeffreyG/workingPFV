@@ -1,8 +1,19 @@
 import React from "react";
 import "./navbar.css";
+import { Node } from "../Utils/types/types";
 import { Algos, Speed } from "../SelectBox/SelectBox";
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  viewGrid: Node[][];
+  clearGrid: (grid: Node[][], setGrid: any) => any;
+  setViewGrid: any;
+}
+
+const NavBar: React.FC<NavBarProps> = ({
+  viewGrid,
+  clearGrid,
+  setViewGrid,
+}) => {
   return (
     <nav>
       <div>Path-Finding Visualizer</div>
@@ -14,9 +25,11 @@ const NavBar: React.FC = () => {
           <Speed />
         </li>
         <li>
-          <button>PlaceHolder</button>
+          <button onClick={() => clearGrid(viewGrid, setViewGrid)}>
+            Clear
+          </button>
         </li>
-        <li>placeholder</li>
+        <button>Start</button>
       </ul>
     </nav>
   );
