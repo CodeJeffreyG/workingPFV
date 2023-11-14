@@ -1,8 +1,8 @@
 # Pathfinding Visualizer
 
-Pathfinding Visualizer is a web application that visualizes the process of finding the shortest path between a start node and an end node on a grid. The grid is made up of rows and columns, and each cell on the grid represents a node. Each node can be of different types, indicated by different colors on the UI. For example, `isWall: true` makes the node black.
+Pathfinding Visualizer is a web application that visually represents the process of finding the shortest path between a start node and an end node on a grid. The grid is made up of rows and columns, and each cell on the grid represents a node. Each node can be of different types, indicated by different colors on the UI. For example, `isWall: true` makes the node black.
 
-Currently, the only available algorithm for finding the shortest path is Depth-First Search (DFS). Other algorithms, such as Breadth-First Search (BFS), will be added soon.
+Currently, the available algorithm for finding the shortest path is Depth-First Search (DFS). Other algorithms, such as Breadth-First Search (BFS), will be added soon.
 
 ## Installation
 To run the application locally, you'll need to have Node.js and npm installed on your machine. Once you've installed Node.js, follow these steps:
@@ -21,6 +21,10 @@ To run the application locally, you'll need to have Node.js and npm installed on
 ### Seamless Wall Placement
 
 - Create walls effortlessly by holding down the mouse button and moving it across the grid. This allows for a seamless and intuitive wall placement experience.
+
+### Clear Button with Node Memory
+
+- Added a "Clear" button that resets the grid, but remembers the previous locations of the start and end nodes.
 
 ## Algorithms
 
