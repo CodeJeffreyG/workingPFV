@@ -7,12 +7,14 @@ interface NavBarProps {
   viewGrid: Node[][];
   clearGrid: (grid: Node[][], setGrid: any) => any;
   setViewGrid: any;
+  Bfs: any;
 }
 
 const NavBar: React.FC<NavBarProps> = ({
   viewGrid,
   clearGrid,
   setViewGrid,
+  Bfs,
 }) => {
   return (
     <nav>
@@ -29,7 +31,7 @@ const NavBar: React.FC<NavBarProps> = ({
             Clear
           </button>
         </li>
-        <button>Start</button>
+        <button onClick={() => Bfs(viewGrid, setViewGrid)}>Start</button>
       </ul>
     </nav>
   );

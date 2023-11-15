@@ -253,14 +253,28 @@ const clearGrid = (
   for (let row of tempGrid) {
     for (let col of row) {
       if (col.isStart || col.isFinish) {
+        col = {
+          ...col,
+          isWall: false,
+          isVisited: false,
+          previousNode: null,
+          count: 0,
+          backTracked: false,
+        };
         continue;
       }
 
       // Update the properties of the current node in tempGrid directly
-      col.isWall = false;
-      col.isVisited = false;
-      col.backTracked = false;
-      col.count = 0;
+      col = {
+        ...col,
+        isWall: false,
+        isStart: false,
+        isFinish: false,
+        isVisited: false,
+        previousNode: null,
+        count: 0,
+        backTracked: false,
+      };
     }
   }
 
