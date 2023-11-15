@@ -132,7 +132,12 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
 
   return (
     <>
-      <NavBar viewGrid={viewGrid} clearGrid={clearGrid} setViewGrid={setViewGrid} Bfs = {Bfs} />
+      <NavBar
+        viewGrid={viewGrid}
+        clearGrid={clearGrid}
+        setViewGrid={setViewGrid}
+        Bfs={Bfs}
+      />
       {viewGrid.map((row: Node[], rowIndex: number) => (
         <div className="rowContainer" key={rowIndex}>
           {row.map((col: Node, colIndex: number) => (
@@ -158,12 +163,11 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
               className="node"
               id={`${col.row},${col.col}`}
             >
-              {/* {grid[rowIndex][colIndex].count} */}
+              {grid[rowIndex][colIndex].count}
             </div>
           ))}
         </div>
       ))}
-      <button onClick={() => Bfs(viewGrid, setViewGrid)}>start</button>
     </>
   );
 };
