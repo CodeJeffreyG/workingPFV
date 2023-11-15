@@ -248,35 +248,31 @@ const clearGrid = (
   grid: Array<Array<Node>>,
   setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>
 ) => {
-  const tempGrid = [...grid];
-
-  for (let row of tempGrid) {
-    for (let col of row) {
-      if (col.isStart || col.isFinish) {
-        col = {
-          ...col,
+  const tempGrid = grid.map((row) => {
+    return row.map((cell) => {
+      if (cell.isStart || cell.isFinish) {
+        return {
+          ...cell,
           isWall: false,
           isVisited: false,
           previousNode: null,
           count: 0,
           backTracked: false,
         };
-        continue;
+      } else {
+        return {
+          ...cell,
+          isWall: false,
+          isStart: false,
+          isFinish: false,
+          isVisited: false,
+          previousNode: null,
+          count: 0,
+          backTracked: false,
+        };
       }
-
-      // Update the properties of the current node in tempGrid directly
-      col = {
-        ...col,
-        isWall: false,
-        isStart: false,
-        isFinish: false,
-        isVisited: false,
-        previousNode: null,
-        count: 0,
-        backTracked: false,
-      };
-    }
-  }
+    });
+  });
 
   // Set the state after the loops are completed
   setGrid(tempGrid);

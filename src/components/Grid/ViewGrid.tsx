@@ -163,7 +163,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
               className="node"
               id={`${col.row},${col.col}`}
             >
-              {grid[rowIndex][colIndex].count}
+              {/* {grid[rowIndex][colIndex].count} */}
             </div>
           ))}
         </div>
