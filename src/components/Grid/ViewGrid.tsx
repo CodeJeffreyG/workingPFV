@@ -155,6 +155,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
                   : col.isWall
                   ? { backgroundColor: "black" }
                   : col.isVisited
+                  
                   ? { backgroundColor: "blue" }
                   : col.backTracked
                   ? { backgroundColor: "gold" }
