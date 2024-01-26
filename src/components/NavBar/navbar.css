@@ -3,19 +3,20 @@ nav {
   justify-content: space-between;
   align-items: center;
   font-size: larger;
+  font-weight: 500; /* Adjust the font weight if desired */
   width: 100%;
   min-height: 80px;
   background-color: #ffffff;
   color: #474747;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  position: fixed; /* Make the navbar fixed */
-  top: 0; /* Stick it to the top */
-  z-index: 1000; /* Set a higher z-index to ensure it appears above other elements */
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  padding: 0 2rem; /* Add padding to left and right */
 }
 
 nav > div {
   flex: 1;
-  margin-left: 2rem;
 }
 
 nav > ul {
@@ -23,11 +24,20 @@ nav > ul {
   list-style: none;
   justify-content: space-around;
   flex: 3;
-  margin-right: 2rem;
+  padding: 0; /* Reset padding */
+  margin: 0; /* Reset margin to align with the height of the nav */
 }
 
 nav > ul > li {
   display: flex;
-  margin-left: 1rem;
+  align-items: center; /* Center items vertically */
+  margin: 0 1rem; /* Set uniform margin */
+  padding: 10px 15px; /* Add padding for a larger click area */
   cursor: pointer;
+  border-radius: 5px; /* Optional: rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+nav > ul > li:hover {
+  background-color: #f2f2f2; /* Slight background on hover for feedback */
 }

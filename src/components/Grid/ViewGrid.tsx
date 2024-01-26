@@ -131,45 +131,48 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   };
 
   return (
-    <>
-      <NavBar
-        viewGrid={viewGrid}
-        clearGrid={clearGrid}
-        setViewGrid={setViewGrid}
-        Bfs={Bfs}
-      />
-      {viewGrid.map((row: Node[], rowIndex: number) => (
-        <div className="rowContainer" key={rowIndex}>
-          {row.map((col: Node, colIndex: number) => (
-            <div
-              onClick={changeState}
-              key={colIndex}
-              onMouseDown={mouseDown}
-              onMouseUp={mouseUp}
-              onMouseEnter={(e) => onMouseEnter(e)}
-              style={
-                col.isStart
-                  ? { backgroundColor: "green", cursor: "pointer" }
-                  : col.isFinish
-                  ? { backgroundColor: "red", cursor: "pointer" }
-                  : col.isWall
-                  ? { backgroundColor: "black" }
-                  : col.isVisited
-                  
-                  ? { backgroundColor: "blue" }
-                  : col.backTracked
-                  ? { backgroundColor: "gold" }
-                  : { backgroundColor: "rgb(71 85 105)" }
-              }
-              className="node"
-              id={`${col.row},${col.col}`}
-            >
-              {/* {grid[rowIndex][colIndex].count} */}
-            </div>
-          ))}
-        </div>
-      ))}
-    </>
+    <div className="pageContainer">
+      <div className="navBarContainer">
+        <NavBar
+          viewGrid={viewGrid}
+          clearGrid={clearGrid}
+          setViewGrid={setViewGrid}
+          Bfs={Bfs}
+        />
+      </div>
+      <div className="gridContainer">
+        {viewGrid.map((row: Node[], rowIndex: number) => (
+          <div className="rowContainer" key={rowIndex}>
+            {row.map((col: Node, colIndex: number) => (
+              <div
+                onClick={changeState}
+                key={colIndex}
+                onMouseDown={mouseDown}
+                onMouseUp={mouseUp}
+                onMouseEnter={(e) => onMouseEnter(e)}
+                style={
+                  col.isStart
+                    ? { backgroundColor: "green", cursor: "pointer" }
+                    : col.isFinish
+                    ? { backgroundColor: "red", cursor: "pointer" }
+                    : col.isWall
+                    ? { backgroundColor: "black" }
+                    : col.isVisited
+                    ? { backgroundColor: "blue" }
+                    : col.backTracked
+                    ? { backgroundColor: "gold" }
+                    : { backgroundColor: "rgb(71 85 105)" }
+                }
+                className="node"
+                id={`${col.row},${col.col}`}
+              >
+                {/* {grid[rowIndex][colIndex].count} */}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
