@@ -1,7 +1,19 @@
 import React from "react";
 import "./navbar.css";
+import Dropdown from ; // Update this path to the actual location of your Dropdown component
 import { Node } from "../Utils/types/types";
-import { Algos, Speed } from "../SelectBox/SelectBox";
+
+
+const algorithms = [
+  { value: "bfs", label: "BFS" },
+  { value: "dfs", label: "DFS" },
+];
+
+const speeds = [
+  { value: "slow", label: "Slow" },
+  { value: "normal", label: "Normal" },
+  { value: "fast", label: "Fast" },
+];
 
 interface NavBarProps {
   viewGrid: Node[][];
@@ -21,17 +33,19 @@ const NavBar: React.FC<NavBarProps> = ({
       <div>Path-Finding Visualizer</div>
       <ul>
         <li>
-          <Algos />
+          <Dropdown options={algorithms} placeholder="Algorithms" />
         </li>
         <li>
-          <Speed />
+          <Dropdown options={speeds} placeholder="Speed" />
         </li>
         <li>
           <button onClick={() => clearGrid(viewGrid, setViewGrid)}>
             Clear
           </button>
         </li>
-        <button onClick={() => Bfs(viewGrid, setViewGrid)}>Start</button>
+        <li>
+          <button onClick={() => Bfs(viewGrid, setViewGrid)}>Start</button>
+        </li>
       </ul>
     </nav>
   );

@@ -1,28 +1,52 @@
-import { useState, useEffect } from "react";
-import Select from "react-select";
-import "./select.css";
+import React, { useState } from "react";
+import "./CustomSelect.css"; // Make sure the path to your CSS file is correct
 
-import React from "react";
+// Define the structure of a single option in the dropdown
+interface Option {
+  value: string;
+  label: string;
+}
 
-const Algos = () => {
-  const options = [
-    { value: "bfs", label: "BFS" },
-    { value: "dfs", label: "DFS" },
-  ];
+// Define the props expected by the Dropdown component
+interface DropdownProps {
+  options: Option[];
+  placeholder: string;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ options, placeholder }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const toggling = () => setIsOpen(!isOpen);
+
+  const onOptionClicked = (value: string) => () => {
+    setSelectedOption(value);
+    setIsOpen(false);
+    // You can handle the selected value here (e.g., lifting the state up to the parent component or handling form submission)
+    console.log(value);
+  };
 
   return (
-    <Select options={options} placeholder="Algorithims" className="algo-menu" />
+    <div className="dropdown-container">
+      <div className="dropdown-header" onClick={toggling}>
+        {selectedOption ? options.find((option) => option.value === selectedOption)?.label : placeholder}
+      </div>
+      {isOpen && (
+        <div className="dropdown-list-container">
+          <ul className="dropdown-list">
+            {options.map((option) => (
+              <li 
+                className="dropdown-list-item" 
+                onClick={onOptionClicked(option.value)} 
+                key={option.value}>
+                {option.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 
-const Speed = () => {
-  const options = [
-    { value: "slow", label: "Slow" },
-    { value: "normal", label: "Normal" },
-    { value: "fast", label: "Fast" },
-  ];
-
-  return <Select options={options} placeholder="Speed" className="speed-menu"/>;
-};
-
-export { Algos, Speed };
+export default Dropdown;

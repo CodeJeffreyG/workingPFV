@@ -1,11 +1,41 @@
-.algo-menu {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+/* CustomSelect.css */
+.dropdown-container {
+  position: relative;
+  width: 200px;
+  user-select: none;
 }
 
-.speed-menu {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.dropdown-header {
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.algo-menu .Select-menu {
-  color: green;
+.dropdown-list-container {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
+.dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #4caf50;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-list-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: white;
+  &:hover {
+    background-color: #367c39;
+  }
 }
