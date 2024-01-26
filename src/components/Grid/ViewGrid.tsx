@@ -15,7 +15,6 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
 
   const [createWalls, setCreateWalls] = useState<boolean>(false);
 
-
   const [currentNode, setCurrentNode] = useState<Node>({
     isWall: false,
     isStart: false,
@@ -31,6 +30,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   useEffect(() => {
     const handleGlobalMouseUp = () => {
       setMouseClick(false);
+      setCreateWalls(false);
     };
 
     window.addEventListener("mouseup", handleGlobalMouseUp);
@@ -38,7 +38,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     return () => {
       window.removeEventListener("mouseup", handleGlobalMouseUp);
     };
-  }, []);
+  }, [viewGrid]);
 
   const toggleWall = (node: Node) => {
     if (node.isStart || node.isFinish || mouseClick) return; // Prevent changing start or finish nodes, and ensure mouse is pressed
@@ -55,8 +55,6 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     let tempGrid = [...viewGrid];
     let node = tempGrid[row][col];
 
-
-
     // Toggle the wall state only if it's not the start or finish node
     if (!node.isStart && !node.isFinish) {
       node.isWall = !node.isWall; // Toggle the wall state
@@ -67,25 +65,34 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
 
-    setMouseClick(true);
-
     const currentId = e.currentTarget.id;
     let parsedId = currentId.split(",").map((x) => Number(x));
-    let node = viewGrid[parsedId[0]][parsedId[1]];
     let tempGrid = [...viewGrid];
+    let node = tempGrid[parsedId[0]][parsedId[1]];
 
     if (!node.isStart && !node.isFinish) {
       setCreateWalls(true);
-      tempGrid[parsedId[0]][parsedId[1]] = {
-        ...node,
-        isWall: true,
-        isStart: false,
-        isFinish: false,
-      };
+      if (!tempGrid[parsedId[0]][parsedId[1]].isWall) {
+        tempGrid[parsedId[0]][parsedId[1]] = {
+          ...node,
+          isWall: true,
+          isStart: false,
+          isFinish: false,
+        };
+      }
+      if (
+        (tempGrid[parsedId[0]][parsedId[1]] = {
+          ...node,
+          isWall: false,
+          isStart: false,
+          isFinish: false,
+        })
+      )
+        toggleWall(tempGrid[parsedId[0]][parsedId[1]]);
       setViewGrid(tempGrid);
-      // console.log("create walls is now true", createWalls);
     }
 
+    setMouseClick(true);
     setCurrentNode(node);
   };
 
