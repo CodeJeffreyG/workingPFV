@@ -3,7 +3,6 @@ import { Node } from "../Utils/types/types";
 import NavBar from "../NavBar/NavBar";
 import { Dfs, Bfs, clearGrid } from "../Utils/Algos";
 import "./grid.css";
-import { start } from "repl";
 
 interface Props {
   grid: Node[][];
@@ -15,6 +14,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   const [mouseClick, setMouseClick] = useState<boolean>(false);
 
   const [createWalls, setCreateWalls] = useState<boolean>(false);
+
 
   const [currentNode, setCurrentNode] = useState<Node>({
     isWall: false,
@@ -31,8 +31,6 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   useEffect(() => {
     const handleGlobalMouseUp = () => {
       setMouseClick(false);
-      setCreateWalls(false);
-      setCurrentNode(currentNode);
     };
 
     window.addEventListener("mouseup", handleGlobalMouseUp);
@@ -42,19 +40,29 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     };
   }, []);
 
+  const toggleWall = (node: Node) => {
+    if (node.isStart || node.isFinish || mouseClick) return; // Prevent changing start or finish nodes, and ensure mouse is pressed
+
+    let newGrid = [...viewGrid];
+    node.isWall = !node.isWall;
+    setViewGrid(newGrid);
+  };
+
   //changes normal node to wall node
   const changeState = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const currentId = e.currentTarget.id;
-    let parsedId = currentId.split(",").map((x) => Number(x));
+    const [row, col] = currentId.split(",").map((x) => Number(x));
     let tempGrid = [...viewGrid];
-    let node = tempGrid[parsedId[0]][parsedId[1]];
+    let node = tempGrid[row][col];
 
-    if (node.isStart || node.isFinish) return;
 
-    node.isWall = !node.isWall;
-    setViewGrid(tempGrid);
+
+    // Toggle the wall state only if it's not the start or finish node
+    if (!node.isStart && !node.isFinish) {
+      node.isWall = !node.isWall; // Toggle the wall state
+      setViewGrid(tempGrid);
+    }
   };
-
   //checks if its startNode or finishNode if it is able to drag node
   const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
