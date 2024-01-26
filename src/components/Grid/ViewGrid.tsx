@@ -152,22 +152,20 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
                 onMouseEnter={(e) => onMouseEnter(e)}
                 style={
                   col.isStart
-                    ? { backgroundColor: "green", cursor: "pointer" }
+                    ? { backgroundColor: "#4CAF50", cursor: "pointer" } // Green for start
                     : col.isFinish
-                    ? { backgroundColor: "red", cursor: "pointer" }
+                    ? { backgroundColor: "#f44336", cursor: "pointer" } // Red for finish
                     : col.isWall
-                    ? { backgroundColor: "black" }
+                    ? { backgroundColor: "#212121" } // Dark grey for walls
                     : col.isVisited
-                    ? { backgroundColor: "blue" }
+                    ? { backgroundColor: "#2196F3" } // Blue for visited
                     : col.backTracked
-                    ? { backgroundColor: "gold" }
-                    : { backgroundColor: "rgb(71 85 105)" }
+                    ? { backgroundColor: "#FFEB3B" } // Gold for backtracked path
+                    : { backgroundColor: "#474747" } // Darker grey for normal nodes
                 }
                 className="node"
                 id={`${col.row},${col.col}`}
-              >
-                {/* {grid[rowIndex][colIndex].count} */}
-              </div>
+              ></div>
             ))}
           </div>
         ))}

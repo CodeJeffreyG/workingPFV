@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CustomSelect.css"; // Make sure the path to your CSS file is correct
+import "./select.css"; // Make sure the path to your CSS file is correct
 
 // Define the structure of a single option in the dropdown
 interface Option {
@@ -29,16 +29,19 @@ const Dropdown: React.FC<DropdownProps> = ({ options, placeholder }) => {
   return (
     <div className="dropdown-container">
       <div className="dropdown-header" onClick={toggling}>
-        {selectedOption ? options.find((option) => option.value === selectedOption)?.label : placeholder}
+        {selectedOption
+          ? options.find((option) => option.value === selectedOption)?.label
+          : placeholder}
       </div>
       {isOpen && (
         <div className="dropdown-list-container">
           <ul className="dropdown-list">
             {options.map((option) => (
-              <li 
-                className="dropdown-list-item" 
-                onClick={onOptionClicked(option.value)} 
-                key={option.value}>
+              <li
+                className="dropdown-list-item"
+                onClick={onOptionClicked(option.value)}
+                key={option.value}
+              >
                 {option.label}
               </li>
             ))}

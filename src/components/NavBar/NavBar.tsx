@@ -1,8 +1,7 @@
 import React from "react";
 import "./navbar.css";
-import Dropdown from ; // Update this path to the actual location of your Dropdown component
+import Dropdown from "../SelectBox/SelectBox"; // Update this path to the actual location of your Dropdown component
 import { Node } from "../Utils/types/types";
-
 
 const algorithms = [
   { value: "bfs", label: "BFS" },

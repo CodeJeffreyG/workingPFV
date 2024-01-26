@@ -1,11 +1,13 @@
 .pageContainer {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 50px);
   overflow: hidden; /* This will prevent any overflow of the entire page */
 }
 
 .gridContainer {
+  background-color: #f0f0f0; /* Soft grey background */
+
   margin-top: 50px;
   /* background-color: red; */
 }
