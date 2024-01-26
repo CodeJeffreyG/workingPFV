@@ -51,13 +51,13 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
   //changes normal node to wall node
   const changeState = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const currentId = e.currentTarget.id;
-    const [row, col] = currentId.split(",").map((x) => Number(x));
+    const [row, col] = currentId.split(",").map(Number);
     let tempGrid = [...viewGrid];
-    let node = tempGrid[row][col];
 
-    // Toggle the wall state only if it's not the start or finish node
+    const node = tempGrid[row][col];
+
     if (!node.isStart && !node.isFinish) {
-      node.isWall = !node.isWall; // Toggle the wall state
+      node.isWall = !node.isWall;
       setViewGrid(tempGrid);
     }
   };
@@ -66,34 +66,19 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
     e.preventDefault();
 
     const currentId = e.currentTarget.id;
-    let parsedId = currentId.split(",").map((x) => Number(x));
-    let tempGrid = [...viewGrid];
-    let node = tempGrid[parsedId[0]][parsedId[1]];
+    const [row, col] = currentId.split(",").map(Number);
+    const node = viewGrid[row][col];
 
-    if (!node.isStart && !node.isFinish) {
+    // Check if the clicked node is the start or finish node
+    if (node.isStart || node.isFinish) {
+      setMouseClick(true);
+      setCurrentNode(node);
+    } else {
+      // For any other node, initiate the wall creation process
       setCreateWalls(true);
-      if (!tempGrid[parsedId[0]][parsedId[1]].isWall) {
-        tempGrid[parsedId[0]][parsedId[1]] = {
-          ...node,
-          isWall: true,
-          isStart: false,
-          isFinish: false,
-        };
-      }
-      if (
-        (tempGrid[parsedId[0]][parsedId[1]] = {
-          ...node,
-          isWall: false,
-          isStart: false,
-          isFinish: false,
-        })
-      )
-        toggleWall(tempGrid[parsedId[0]][parsedId[1]]);
-      setViewGrid(tempGrid);
+      // Set the current node for potential dragging
+      setCurrentNode(node);
     }
-
-    setMouseClick(true);
-    setCurrentNode(node);
   };
 
   //turns start/finish node draggable off
