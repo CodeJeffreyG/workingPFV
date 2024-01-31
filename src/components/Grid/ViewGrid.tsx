@@ -138,6 +138,7 @@ const ViewGrid: React.FC<Props> = ({ grid }) => {
           clearGrid={clearGrid}
           setViewGrid={setViewGrid}
           Bfs={Bfs}
+          Dfs={Dfs}
         />
       </div>
       <div className="gridContainer">
