@@ -3,7 +3,7 @@ import { Node } from "./types/types";
 const speedToDelay: any = {
   slow: 30, // Slow speed in milliseconds
   normal: 10, // Normal speed in milliseconds
-  fast: 5, // Fast speed in milliseconds
+  fast: 1, // Fast speed in milliseconds
 };
 
 //write an algorithim that finds the shortest path back from the finishNode to the startNode
