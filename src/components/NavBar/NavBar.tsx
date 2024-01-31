@@ -35,7 +35,7 @@ const NavBar: React.FC<NavBarProps> = ({
   Dfs,
 }) => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
-  const [selectedSpeed, setSelectedSpeed] = useState<string>("normal");
+  const [selectedSpeed, setSelectedSpeed] = useState<string>("fast");
 
   const algorithms: Option[] = [
     { value: "bfs", label: "BFS" },
