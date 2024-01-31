@@ -10,8 +10,11 @@ const speedToDelay: any = {
 const bfsTraverseBack = (
   grid: Array<Array<Node>>,
   setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>,
-  finishNode: Node
+  finishNode: Node,
+  speed: string
 ) => {
+  let currentSpeed = speedToDelay[speed];
+
   const upDownLeftRight: any = [
     [1, 0],
     [0, 1],
@@ -50,7 +53,7 @@ const bfsTraverseBack = (
 
     setTimeout(() => {
       traverse(queue); // Recursive call for the next iteration
-    }, 100);
+    }, currentSpeed);
   };
 
   const queue = [finishNode];
@@ -91,7 +94,7 @@ const Dfs = (
     // If the node is the finish node, return
     if (currentNode.isFinish) {
       console.log("finish Node found!");
-      bfsTraverseBack(grid, setGrid, currentNode);
+      bfsTraverseBack(grid, setGrid, currentNode, speed);
       return;
     }
 
@@ -162,7 +165,7 @@ const Bfs = (
     // If the node is the finish node, return
     if (currentNode.isFinish) {
       console.log("finish Node found!");
-      bfsTraverseBack(grid, setGrid, currentNode);
+      bfsTraverseBack(grid, setGrid, currentNode, speed);
       return;
     }
 
