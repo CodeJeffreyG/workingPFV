@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./navbar.css";
+import "./navbar.css"; // Make sure this path is correct
 import Dropdown from "../SelectBox/SelectBox"; // Update the import path as necessary
 import { Node } from "../Utils/types/types";
 
@@ -8,7 +8,6 @@ interface Option {
   label: string;
 }
 
-// Define the props expected by the NavBar component
 interface NavBarProps {
   viewGrid: Node[][];
   clearGrid: (
@@ -18,11 +17,13 @@ interface NavBarProps {
   setViewGrid: React.Dispatch<React.SetStateAction<Node[][]>>;
   Bfs: (
     grid: Node[][],
-    setGrid: React.Dispatch<React.SetStateAction<Node[][]>>
+    setGrid: React.Dispatch<React.SetStateAction<Node[][]>>,
+    speed: string
   ) => void;
   Dfs: (
     grid: Node[][],
-    setGrid: React.Dispatch<React.SetStateAction<Node[][]>>
+    setGrid: React.Dispatch<React.SetStateAction<Node[][]>>,
+    speed: string
   ) => void;
 }
 
@@ -34,20 +35,32 @@ const NavBar: React.FC<NavBarProps> = ({
   Dfs,
 }) => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState<string>("");
+  const [selectedSpeed, setSelectedSpeed] = useState<string>("normal");
 
   const algorithms: Option[] = [
     { value: "bfs", label: "BFS" },
     { value: "dfs", label: "DFS" },
   ];
+
+  const speeds: Option[] = [
+    { value: "slow", label: "Slow" },
+    { value: "normal", label: "Normal" },
+    { value: "fast", label: "Fast" },
+  ];
+
   const handleAlgorithmChange = (value: string) => {
     setSelectedAlgorithm(value);
   };
 
+  const handleSpeedChange = (value: string) => {
+    setSelectedSpeed(value);
+  };
+
   const handleStart = () => {
     if (selectedAlgorithm === "dfs") {
-      Dfs(viewGrid, setViewGrid);
+      Dfs(viewGrid, setViewGrid, selectedSpeed);
     } else {
-      Bfs(viewGrid, setViewGrid);
+      Bfs(viewGrid, setViewGrid, selectedSpeed);
     }
   };
 
@@ -62,7 +75,13 @@ const NavBar: React.FC<NavBarProps> = ({
             onOptionSelected={handleAlgorithmChange}
           />
         </li>
-        <li>{/* Speed dropdown or other UI elements */}</li>
+        <li>
+          <Dropdown
+            options={speeds}
+            placeholder="Select Speed"
+            onOptionSelected={handleSpeedChange}
+          />
+        </li>
         <li>
           <button onClick={() => clearGrid(viewGrid, setViewGrid)}>
             Clear

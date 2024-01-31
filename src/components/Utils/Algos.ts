@@ -1,6 +1,10 @@
 import { Node } from "./types/types";
 
-//will be used to find the shortest path
+const speedToDelay: any = {
+  slow: 100, // Slow speed in milliseconds
+  normal: 50, // Normal speed in milliseconds
+  fast: 10, // Fast speed in milliseconds
+};
 
 //write an algorithim that finds the shortest path back from the finishNode to the startNode
 const bfsTraverseBack = (
@@ -55,9 +59,11 @@ const bfsTraverseBack = (
 
 const Dfs = (
   grid: Array<Array<Node>>,
-  setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>
+  setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>,
+  speed: string
 ) => {
   // Find the starting node
+  let currentSpeed = speedToDelay[speed];
   const startNode = grid
     .map((row) => row.find((col) => col.isStart))
     .filter((x) => x)[0];
@@ -113,7 +119,7 @@ const Dfs = (
     }
 
     // Call dfsTimeout again after 1 second to continue the DFS algorithm
-    setTimeout(dfsTimeout, 10);
+    setTimeout(dfsTimeout, currentSpeed);
   };
 
   // Call dfsTimeout to start the DFS algorithm
@@ -122,8 +128,10 @@ const Dfs = (
 
 const Bfs = (
   grid: Array<Array<Node>>,
-  setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>
+  setGrid: React.Dispatch<React.SetStateAction<Array<Array<Node>>>>,
+  speed: string
 ) => {
+  let currentSpeed = speedToDelay[speed];
   // Find the starting node
   const startNode = grid
     .map((row) => row.find((col) => col.isStart))
@@ -194,7 +202,7 @@ const Bfs = (
     }
 
     // Call bfsTimeout again after a short delay to continue the BFS algorithm
-    setTimeout(bfsTimeout, 10);
+    setTimeout(bfsTimeout, currentSpeed);
   };
 
   // Call bfsTimeout to start the BFS algorithm
